@@ -1,0 +1,111 @@
+1                                           The SAS System                 14:00 Monday, April 1, 2013
+
+NOTE: Copyright (c) 2002-2010 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.3 (TS1M1) 
+      Licensed to UNIVERSITY OF ALABAMA - SFA - T&R, Site 70088110.
+NOTE: This session is executing on the X64_7PRO  platform.
+
+
+
+NOTE: Updated analytical products:
+
+SAS/STAT 9.3_M1, SAS/ETS 9.3_M1, SAS/OR 9.3_M1
+
+NOTE: SAS initialization used:
+      real time           3.59 seconds
+      cpu time            0.14 seconds
+      
+1          *=====================================================================;
+2          *PROGRAM DETAILS;
+3          *=====================================================================;
+4          *Program: 	SAS_to_SQLite.sas;
+5          *Version: 	1.0;
+6          *Author:    S. Brad Daughdrill;
+7          *Date:		03.19.2012;
+8          *Purpose:	Export and Import of WRDS tables to SAS and SQLite;
+9          *=====================================================================;
+10         *MACROS USED;
+11         *=====================================================================;
+12         *-------------------------------Name----------------------------------;
+13         * %sas2sqlite(sastable=,path=,database=);
+14         * %sqlite2sas(sqlitetable=,path=,database=);
+15         *=====================================================================;
+16         *Sets initial options (clears output window and log, sets linesize,etc.);
+17         *=====================================================================;
+18         title;
+19         footnote;
+20         
+21         options ls=102;
+22         options ps=80;
+23         options label;
+24         options nocenter;
+25         
+26         ods results off;
+27         ods listing close;
+28         
+29         *options nosource;    *no echo statements;
+30         options source;      *echo statements;
+31         
+32         options nosource2;   *no echo includes;
+33         options nomfile;
+34         options nospool;
+35         
+36         /*
+37         options source2;     *echo includes;
+38         options mfile;
+39         options spool;
+40         */
+41         
+42         /*
+43         options symbolgen;   *macro debugging;
+44         options macrogen;    *macro debugging;
+45         options mlogic;      *macro debugging;
+46         options mprint;      *echo macro text;
+47         options notes;       *time-used notes;
+48         */
+49         
+50         options nosymbolgen; *no macro debugging;
+51         options nomacrogen;  *no macro debugging;
+52         options nomlogic;    *no macro debugging;
+53         options nomprint;    *no echo macro text;
+54         options nonotes;     *no time-used notes;
+55         
+56         *=====================================================================;
+57         *Delete Macro Variables;
+58         *=====================================================================;
+59         %include "C:\Users\bdaughdr\Dropbox\Research\SAS\Macros\Brad\DeleteMacros.sas"; *Office;
+MACRO CALLED: DeleteMacros v1.0
+95         *%include "\\tsclient\C\Users\bdaughdr\Dropbox\Research\SAS\Macros\Brad\DeleteMacros.sas";
+95       ! *CoralSea from Office;
+96         *%include "\\tsclient\C\Users\Brad\Dropbox\Research\SAS\Macros\Brad\DeleteMacros.sas";
+2 The SAS System                                                           14:00 Monday, April 1, 2013
+
+96       ! *CoralSea from Home;
+97         %DeleteMacros;
+WARNING: No output destinations active.
+98         *=====================================================================;
+99         *Create Macro Directory;
+100        *=====================================================================;
+101        %global fullmacrodirectory;
+102        %let fullmacrodirectory=C:\Users\bdaughdr\Dropbox\Research\SAS\Macros; *Office;
+103        *%let fullmacrodirectory=\\tsclient\C\Users\bdaughdr\Dropbox\Research\SAS\Macros; *CoralSea
+103      !  from Office;
+104        *%let fullmacrodirectory=\\tsclient\C\Users\Brad\Dropbox\Research\SAS\Macros;  *CoralSea
+104      ! from Home;
+105        *=====================================================================;
+106        *Create Local Directories;
+107        *=====================================================================;
+108        *%symdel projectrootdirectory;
+109        %global projectrootdirectory;
+110        %let projectrootdirectory=C:\Users\bdaughdr\Dropbox\Research\3rd-Year_Paper\SAS;
+111        *=====================================================================;
+112        *Macro includes;
+113        *=====================================================================;
+114        *%include "&fullmacrodirectory.\IncludeMacros.sas";
+115        *%IncludeMacros (projfolder=&projectrootdirectory.,researchfolder=&fullmacrodirectory.);
+116        %include "&projectrootdirectory.\sas2sqlite.sas"; *Office;
+209        %include "&projectrootdirectory.\sqlite2sas.sas"; *Office;
+262        *=====================================================================;
+263        *Clear output window and log;
+264        *=====================================================================;
+265        DM 'clear output';    	
