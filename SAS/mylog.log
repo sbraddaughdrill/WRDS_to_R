@@ -42,3 +42,15 @@
 293  run;
 294  Proc printto log=log;
 295  run;
+350  proc printto print="&projectrootdirectory.\myoutput.lst";
+351  run;
+352  Proc printto log=log;
+353  run;
+699  proc printto print="&projectrootdirectory.\myoutput.lst";
+700  run;
+701  Proc printto log=log;
+702  run;
+288  proc printto print="&projectrootdirectory.\myoutput.lst";
+289  run;
+290  Proc printto log=log;
+291  run;

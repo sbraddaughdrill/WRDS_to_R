@@ -5,12 +5,15 @@ library(sas7bdat)
 library(sqldf)
 library(RSQLite)
 
-setwd("C:/Research_temp/")    
-input_directory <- normalizePath("H:/Research/Mutual_Funds/Data/CRSP_MF/",winslash = "\\", mustWork = NA)
-output_directory <- normalizePath("C:/Research_temp/",winslash = "\\", mustWork = NA)
+#input_directory <- normalizePath("H:/Research/Import_Data/Data/CRSP_MF/",winslash = "\\", mustWork = NA)
+input_directory <- normalizePath("C:/Users/bdaughdr/Documents/temp_out/",winslash = "\\", mustWork = NA)
+
+#output_directory <- normalizePath("C:/Research_temp/",winslash = "\\", mustWork = NA)
+output_directory <- normalizePath("C:/Users/bdaughdr/Documents/temp_out/",winslash = "\\", mustWork = NA)
 
 #function_directory <- normalizePath("C:/Users/Brad/Dropbox/Research/R/",winslash = "\\", mustWork = NA)                     #HOME
-function_directory <- normalizePath("C:/Users/bdaughdr/Dropbox/Research/R/",winslash = "\\", mustWork = NA)                 #WORK
+#function_directory <- normalizePath("C:/Users/bdaughdr/Dropbox/Research/R/",winslash = "\\", mustWork = NA)                 #WORK
+function_directory <- normalizePath("//tsclient/F/Dropbox/Research_Methods/R/",winslash = "\\", mustWork = NA)                 #WORK
 
 source(file=paste(function_directory,"functions_db.R",sep=""),echo=FALSE)
 source(file=paste(function_directory,"functions_utilities.R",sep=""),echo=FALSE)
@@ -36,6 +39,22 @@ crsp_out_db <- paste(output_directory,"CRSPMF2.s3db",sep="")
 #dbDisconnect(connect)
 #dbUnloadDriver(driver)
 
+#Crspa_msi <- as.data.frame(fread(paste(output_directory,"Crspa_msi.csv",sep=""),na.strings="NA",stringsAsFactors=FALSE),stringsAsFactors=FALSE)
+Crspa_msi <- read.csv(file=paste(output_directory,"Crspa_msi.csv",sep=""),header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+ExportTable(crsp_out_db,"Crspa_msi",Crspa_msi)
+rm(Crspa_msi)
+capture.output(gc(),file='NUL')
+
+#Daily_returns <- read.csv(file=paste(output_directory,"Daily_returns.csv",sep=""),header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+#ExportTable(crsp_out_db,"Daily_returns",Daily_returns)
+#rm(Daily_returns)
+#capture.output(gc(),file='NUL')
+
+#Fund_fees <- as.data.frame(fread(paste(output_directory,"Fund_fees.csv",sep=""),na.strings="NA",stringsAsFactors=FALSE),stringsAsFactors=FALSE)
+Fund_fees <- read.csv(file=paste(output_directory,"Fund_fees.csv",sep=""),header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+ExportTable(crsp_out_db,"Fund_fees",Fund_fees)
+rm(Fund_fees)
+capture.output(gc(),file='NUL')
 
 #Fund_hdr <- as.data.frame(fread(paste(output_directory,"Fund_hdr.csv",sep=""),na.strings="NA",stringsAsFactors=FALSE),stringsAsFactors=FALSE)
 Fund_hdr <- read.csv(file=paste(output_directory,"Fund_hdr.csv",sep=""),header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
